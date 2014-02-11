@@ -24,4 +24,7 @@ $ ls | xargs path -a
 
 ``` sh
 $ path -x `ls`
+.go
+
+.md
 ```
