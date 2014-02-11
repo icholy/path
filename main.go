@@ -15,9 +15,11 @@ var (
 	clean = flag.Bool("c", false, "Clean returns the shortest path equivalent")
 )
 
-func Apply(fn func(string) string) {
+func ApplyToArgs(fn func(string) string) {
 	for _, arg := range flag.Args() {
-		fmt.Println(fn(arg))
+		if s := fn(arg); s != "" {
+			fmt.Println(s)
+		}
 	}
 }
 
@@ -29,13 +31,13 @@ func main() {
 	}
 	switch {
 	case *base:
-		Apply(filepath.Base)
+		ApplyToArgs(filepath.Base)
 	case *dir:
-		Apply(filepath.Dir)
+		ApplyToArgs(filepath.Dir)
 	case *ext:
-		Apply(filepath.Ext)
+		ApplyToArgs(filepath.Ext)
 	case *abs:
-		Apply(func(s string) string {
+		ApplyToArgs(func(s string) string {
 			if p, err := filepath.Abs(s); err != nil {
 				return "" //TODO: handle this?
 			} else {
@@ -43,6 +45,6 @@ func main() {
 			}
 		})
 	case *clean:
-		Apply(filepath.Clean)
+		ApplyToArgs(filepath.Clean)
 	}
 }
