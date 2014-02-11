@@ -12,3 +12,16 @@ Usage of path:
   -j=false: Join joins any number of path elements into a single path
   -x=false: Ext returns the file name extension used by path
 ```
+
+Examples:
+
+``` sh
+$ ls | xargs path -a
+/home/icholy/code/go/src/github.com/icholy/path/main.go
+/home/icholy/code/go/src/github.com/icholy/path/path
+/home/icholy/code/go/src/github.com/icholy/path/README.md
+```
+
+``` sh
+$ path -x `ls`
+```
