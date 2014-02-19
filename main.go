@@ -47,11 +47,9 @@ func Apply(fn pathFunc) {
 
 func main() {
 	flag.Parse()
-	if *join {
-		fmt.Println(filepath.Join(flag.Args()...))
-		return
-	}
 	switch {
+	case *join:
+		fmt.Println(filepath.Join(flag.Args()...))
 	case *base:
 		Apply(filepath.Base)
 	case *dir:
