@@ -1,8 +1,10 @@
 package main
 
 import (
+	"bufio"
 	"flag"
 	"fmt"
+	"os"
 	"path/filepath"
 )
 
@@ -15,11 +17,31 @@ var (
 	clean = flag.Bool("c", false, "Clean returns the shortest path equivalent")
 )
 
-func ApplyToArgs(fn func(string) string) {
+type pathFunc func(string) string
+
+func ApplyToArgs(fn pathFunc) {
 	for _, arg := range flag.Args() {
 		if s := fn(arg); s != "" {
 			fmt.Println(s)
 		}
+	}
+}
+
+func ApplyToStdin(fn pathFunc) {
+	scanner := bufio.NewScanner(os.Stdin)
+	scanner.Split(bufio.ScanWords)
+	for scanner.Scan() {
+		if s := fn(scanner.Text()); s != "" {
+			fmt.Println(s)
+		}
+	}
+}
+
+func Apply(fn pathFunc) {
+	if flag.NArg() == 0 {
+		ApplyToStdin(fn)
+	} else {
+		ApplyToArgs(fn)
 	}
 }
 
@@ -31,13 +53,13 @@ func main() {
 	}
 	switch {
 	case *base:
-		ApplyToArgs(filepath.Base)
+		Apply(filepath.Base)
 	case *dir:
-		ApplyToArgs(filepath.Dir)
+		Apply(filepath.Dir)
 	case *ext:
-		ApplyToArgs(filepath.Ext)
+		Apply(filepath.Ext)
 	case *abs:
-		ApplyToArgs(func(s string) string {
+		Apply(func(s string) string {
 			if p, err := filepath.Abs(s); err != nil {
 				return "" //TODO: handle this?
 			} else {
@@ -45,6 +67,6 @@ func main() {
 			}
 		})
 	case *clean:
-		ApplyToArgs(filepath.Clean)
+		Apply(filepath.Clean)
 	}
 }
