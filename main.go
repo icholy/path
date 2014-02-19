@@ -14,7 +14,7 @@ var (
 	ext   = flag.Bool("x", false, "Ext returns the file name extension used by path")
 	join  = flag.Bool("j", false, "Join joins any number of path elements into a single path")
 	abs   = flag.Bool("a", false, "Abs returns an absolute representation of path")
-	clean = flag.Bool("c", false, "Clean returns the shortest path equivalent")
+	clean = flag.Bool("c", true, "Clean returns the shortest path equivalent")
 )
 
 type pathFunc func(string) string
