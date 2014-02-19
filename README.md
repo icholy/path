@@ -16,7 +16,7 @@ Usage of path:
 Examples:
 
 ``` sh
-$ ls | xargs path -a
+$ ls | path -a
 /home/icholy/code/go/src/github.com/icholy/path/main.go
 /home/icholy/code/go/src/github.com/icholy/path/path
 /home/icholy/code/go/src/github.com/icholy/path/README.md
