@@ -21,9 +21,7 @@ type pathFunc func(string) string
 
 func ApplyToArgs(fn pathFunc) {
 	for _, arg := range flag.Args() {
-		if s := fn(arg); s != "" {
-			fmt.Println(s)
-		}
+		fmt.Println(fn(arg))
 	}
 }
 
@@ -31,9 +29,7 @@ func ApplyToStdin(fn pathFunc) {
 	scanner := bufio.NewScanner(os.Stdin)
 	scanner.Split(bufio.ScanWords)
 	for scanner.Scan() {
-		if s := fn(scanner.Text()); s != "" {
-			fmt.Println(s)
-		}
+		fmt.Println(fn(scanner.Text()))
 	}
 }
 
