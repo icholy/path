@@ -28,3 +28,12 @@ $ path -x `ls`
 
 .md
 ```
+
+``` sh
+$ find . | head -100 | path -x | grep -v '^$' | sort | unic -c
+```
+
+``` sh
+$ path -j `pwd` foo bar baz
+/home/icholy/code/go/src/github.com/icholy/path/foo/bar/baz
+```
