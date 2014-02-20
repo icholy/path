@@ -19,13 +19,13 @@ var (
 
 type pathFunc func(string) string
 
-func ApplyToArgs(fn pathFunc) {
+func applyToArgs(fn pathFunc) {
 	for _, arg := range flag.Args() {
 		fmt.Println(fn(arg))
 	}
 }
 
-func ApplyToStdin(fn pathFunc) {
+func applyToStdin(fn pathFunc) {
 	scanner := bufio.NewScanner(os.Stdin)
 	scanner.Split(bufio.ScanWords)
 	for scanner.Scan() {
@@ -33,11 +33,11 @@ func ApplyToStdin(fn pathFunc) {
 	}
 }
 
-func Apply(fn pathFunc) {
+func apply(fn pathFunc) {
 	if flag.NArg() == 0 {
-		ApplyToStdin(fn)
+		applyToStdin(fn)
 	} else {
-		ApplyToArgs(fn)
+		applyToArgs(fn)
 	}
 }
 
@@ -47,13 +47,13 @@ func main() {
 	case *join:
 		fmt.Println(filepath.Join(flag.Args()...))
 	case *base:
-		Apply(filepath.Base)
+		apply(filepath.Base)
 	case *dir:
-		Apply(filepath.Dir)
+		apply(filepath.Dir)
 	case *ext:
-		Apply(filepath.Ext)
+		apply(filepath.Ext)
 	case *abs:
-		Apply(func(arg string) string {
+		apply(func(arg string) string {
 			if s, err := filepath.Abs(arg); err != nil {
 				return "" //TODO: handle this?
 			} else {
@@ -61,6 +61,6 @@ func main() {
 			}
 		})
 	case *clean:
-		Apply(filepath.Clean)
+		apply(filepath.Clean)
 	}
 }
