@@ -53,11 +53,11 @@ func main() {
 	case *ext:
 		Apply(filepath.Ext)
 	case *abs:
-		Apply(func(s string) string {
-			if p, err := filepath.Abs(s); err != nil {
+		Apply(func(arg string) string {
+			if s, err := filepath.Abs(arg); err != nil {
 				return "" //TODO: handle this?
 			} else {
-				return p
+				return s
 			}
 		})
 	case *clean:
